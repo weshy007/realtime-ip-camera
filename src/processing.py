@@ -47,9 +47,16 @@ def put_text(frame, text, pos, color=(255, 255, 255), scale=0.6):
 
 
 def draw_overlay(frame, camera_name, fps):
-    """Timestamp, camera name, resolution and FPS in the top-left corner."""
     h, w = frame.shape[:2]
-    put_text(frame, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), (10, 25))
-    put_text(frame, camera_name, (10, 50))
-    put_text(frame, f"{w}x{h}", (10, 75))
-    put_text(frame, f"FPS: {fps:.1f}", (10, 100))
+    lines = [
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        camera_name,
+        f"{w}x{h}",
+        f"FPS: {fps:.1f}",
+    ]
+    margin, y = 10, 25
+    for line in lines:
+        # getTextSize gives the text width, so we can align it to the right edge
+        (text_w, _), _ = cv2.getTextSize(line, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 1)
+        put_text(frame, line, (w - text_w - margin, y))
+        y += 25   # next line goes lower

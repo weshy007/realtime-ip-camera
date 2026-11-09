@@ -21,7 +21,7 @@ ip-camera-viewer/
 │   ├── camera.py        # Validate URL, check camera is reachable, open, reconnect
 │   ├── processing.py    # Resize, FPS counter, text overlay
 │   ├── media.py         # Screenshot saving + video Recorder
-│   └── web_app.py       # BONUS: Flask browser dashboard
+│   └── web.py           # Flask browser dashboard
 ├── screenshots/         # Saved screenshots (created automatically)
 ├── recordings/          # Saved videos (created automatically)
 ├── docs/
