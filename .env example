@@ -1,1 +1,1 @@
-CAMERA_URL='***'
+CAMERA_URL='http://USERNAME:PASSWORD@192.168.1.23:8081/video' # example url

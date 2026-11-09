@@ -52,9 +52,12 @@ copy .env.example .env         # Windows   (macOS/Linux: cp .env.example .env)
 
 # 4. Run
 python src/main.py
+
+# Or 5. Run Flask web app
+Run it with `python src/web_app.py` and open `http://127.0.0.1:5000`. It binds to `127.0.0.1` so only your own computer can see the feed.
 ```
 
-**Phone as a camera:** install IP Webcam (Android), join the same Wi-Fi as your computer, tap *Start server* and copy the URL it shows, adding `/video` (e.g. `http://192.168.1.23:8080/video`).
+**Phone as a camera:** install IP Webcam (Android/iPhone), join the same Wi-Fi as your computer, tap *Start server* and copy the URL it shows, adding `/video` (e.g. `http://192.168.1.23:8080/video`).
 
 ## Controls
 
@@ -63,20 +66,6 @@ python src/main.py
 | `S` | Save a screenshot to `screenshots/` |
 | `R` | Start / stop recording to `recordings/` |
 | `Esc` | Quit (Ctrl+C in the terminal also works) |
-
-## The 5 steps
-
-Commit at the end of every step.
-
-| Step | Goal | Brief phase | Files | Done when |
-|------|------|-------------|-------|-----------|
-| **1. Setup** | Folder, venv, dependencies, camera running, URL in `.env`, `.gitignore` | Phase 1 | `.env`, `.gitignore`, `requirements.txt`, `config.py` | `.env` is ignored by Git; phone stream opens in a browser |
-| **2. Live stream** | Connect, read frames, show a window, Esc quits and releases everything | Phase 2 | `camera.py`, `main.py` | TC01 passes |
-| **3. Process frames** | Resize to fixed width; overlay time, name, resolution, FPS | Phase 3 | `processing.py` | TC04, TC05 pass |
-| **4. Capture + record** | `S` screenshots, `R` recording with REC status | Phases 4 & 5 | `media.py` | TC06, TC07 pass |
-| **5. Harden, test, document** | Error handling, reconnect, safe shutdown, run all tests, write the report | Phase 6 + testing + report | `camera.py`, `main.py`, `TESTING.md`, `docs/` | TC02, TC03, TC08, TC09, TC10 pass; report answers all 20 technical questions |
-
-**Suggested commit messages:** `Set up project, config and gitignore` → `Show live stream with Esc to quit` → `Add resize and overlays` → `Add screenshot and recording` → `Add error handling and reconnect` → `Add tests and report`.
 
 ## How the code fits together
 
@@ -92,22 +81,8 @@ Each frame goes through: **read → resize → overlay → (record) → add REC/
 
 Recordings and screenshots are saved *without* the temporary "REC" badge and confirmation message, because those are drawn on a copy used only for display.
 
-## Bonus: Flask vs FastAPI for the browser dashboard
-
-| | **Flask** | **FastAPI** |
-|---|---|---|
-| Learning curve | Very gentle, few concepts | Steeper (type hints, async, Pydantic) |
-| Streaming video | Generator + `Response(...)` in ~5 lines | `StreamingResponse`, works but needs more care |
-| Fit with OpenCV | `cap.read()` is **blocking**; Flask's threaded model suits that | Async is wasted on blocking code, so you need threads anyway |
-| Extra setup | `pip install flask` | `pip install fastapi uvicorn` + an ASGI server |
-| Strengths | Simple, huge number of MJPEG examples | Fast APIs, automatic docs, many concurrent clients |
-| Overkill here? | No | Somewhat |
-
-**Verdict: Flask.** This project is a single camera, a blocking OpenCV loop and one or two viewers. Flask is the shortest path to a working dashboard and is easy to explain in your report. FastAPI becomes the better choice only if you later need a proper REST API, many simultaneous users or async multi-camera handling (which also connects nicely to technical question D4).
-
-Run it with `python src/web_app.py` and open `http://127.0.0.1:5000`. It binds to `127.0.0.1` so only your own computer can see the feed.
 
 ## Privacy and security
-- Credentials live only in `.env` (git-ignored); `.env.example` has fake values.
+- Credentials live only in `.env`; `.env.example` has fake values.
 - Use only cameras you own or have permission for, and tell anyone who may be recorded.
 - Screenshots and recordings are git-ignored so they are never pushed.
