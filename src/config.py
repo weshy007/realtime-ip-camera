@@ -19,7 +19,7 @@ RECONNECT_DELAY = 2                                # seconds between reconnect a
 
 
 # Motion detection
-MOTION_MIN_AREA = config("MOTION_MIN_AREA", "1500")   # smaller = more sensitive
+MOTION_MIN_AREA = int(config("MOTION_MIN_AREA", "1500"))   # smaller = more sensitive
 QUIET_SECONDS = int(config("QUIET_SECONDS", "5"))          # no motion this long -> stop auto-recording
 
 def _parse_box(text):

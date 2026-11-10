@@ -1,5 +1,10 @@
 """
-Keys: S = screenshot, R = start/stop recording, Esc = quit
+Keys:   
+    S = screenshot, 
+    R = start/stop recording, 
+    M = motion detection on/off,
+    A = auto-record on motion on/off, 
+    Esc = quit
 """
 import config
 import sys
