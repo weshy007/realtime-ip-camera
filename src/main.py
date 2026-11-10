@@ -12,9 +12,8 @@ from media import Recorder, save_screenshot
 from motion import MotionDetector, draw_motion
 from processing import FPSCounter, draw_overlay, put_text, resize_to_width
 
-WINDOW = "IP Camera Viewer"
 
-detector = MotionDetector()
+WINDOW = "IP Camera Viewer"
 
 
 def start_recording(recorder, frame, fps):
@@ -34,6 +33,8 @@ def main():
  
     recorder = Recorder(config.RECORDING_DIR)
     fps_counter = FPSCounter()
+    detector = MotionDetector(config.MOTION_MIN_AREA, config.MOTION_IGNORE)
+
     message, message_until = "", 0.0     # short on-screen confirmation text
 
     motion_on = False        # M key
