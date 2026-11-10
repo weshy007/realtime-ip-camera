@@ -4,7 +4,7 @@ Checks the URL, checks the camera answers, opens the stream, reconnects.
 """
 
 
-from time import time
+import time
 from urllib.parse import urlparse
 
 import cv2
@@ -77,6 +77,10 @@ def open_stream(url):
     return cap
 
 
+def open_camera(url):
+    return open_stream(url)
+
+
  
 def reconnect(cap, url):
     """
@@ -90,7 +94,7 @@ def reconnect(cap, url):
         time.sleep(config.RECONNECT_DELAY)
         try:
             check_reachable(url)
-            return open_stream(url)
+            return open_camera(url)
         except CameraConnectionError:
             continue  # try again
     raise CameraConnectionError("Could not reconnect to the camera. Giving up.")

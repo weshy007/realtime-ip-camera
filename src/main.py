@@ -12,7 +12,7 @@ import time
 
 import cv2
 
-from camera import CameraConnectionError, check_reachable, open_stream, reconnect, validate_url
+from camera import CameraConnectionError, check_reachable, open_camera, reconnect, validate_url
 from media import Recorder, save_screenshot
 from motion import MotionDetector, draw_motion
 from processing import FPSCounter, draw_overlay, put_text, resize_to_width
@@ -31,7 +31,7 @@ def main():
     try:
         validate_url(config.CAMERA_URL)
         check_reachable(config.CAMERA_URL)
-        cap = open_stream(config.CAMERA_URL)
+        cap = open_camera(config.CAMERA_URL)
     except CameraConnectionError as error:
         print(f"Error: {error}")
         return 1

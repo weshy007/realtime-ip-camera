@@ -12,7 +12,7 @@ import cv2
 from flask import Flask, Response, jsonify
 
 
-from camera import CameraConnectionError, check_reachable, validate_url, open_stream, reconnect, validate_url
+from camera import CameraConnectionError, check_reachable, validate_url, open_camera, reconnect
 from media import Recorder, save_screenshot
 from motion import MotionDetector, draw_motion
 from processing import FPSCounter, draw_overlay, resize_to_width, put_text
@@ -66,7 +66,7 @@ class CameraWorker(threading.Thread):
         cap = None
         fps_counter = FPSCounter()
         try:
-            cap = open_stream(config.CAMERA_URL)
+            cap = open_camera(config.CAMERA_URL)
             while self.running:
                 ok, frame = cap.read()
                 if not ok:

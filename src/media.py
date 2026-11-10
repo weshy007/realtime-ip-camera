@@ -3,9 +3,18 @@ media.py - saving things: screenshots and video recordings.
 """
 import os
 import time
+import math
 from datetime import datetime
 
 import cv2
+
+
+def safe_fps(fps):
+    """Use a playable FPS when measurement is unavailable or outside codec limits."""
+    fps = float(fps)
+    if not math.isfinite(fps) or fps < 5:
+        return 20.0
+    return float(min(round(fps), 60))
 
 
 def timestamp():
@@ -35,6 +44,7 @@ class Recorder:
 
     def start(self, frame, fps):
         os.makedirs(self.folder, exist_ok=True)
+        fps = safe_fps(fps)
         height, width = frame.shape[:2]
         self.size = (width, height)
         path = os.path.join(self.folder, f"recording_{timestamp()}.mp4")
