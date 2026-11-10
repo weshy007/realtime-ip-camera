@@ -6,7 +6,7 @@ import cv2
 from flask import Flask, Response
 
 import config
-from camera import CameraConnectionError, check_reachable, open_stream, validate_url
+from camera import check_reachable, open_stream, validate_url
 from processing import FPSCounter, draw_overlay, resize_to_width
 
 app = Flask(__name__)

@@ -44,7 +44,7 @@ def check_reachable(url):
 
     try:
         # stream=True: only fetch the headers, don't download an endless video
-        response = requests.get(url, stream=True, timeout=config.CONNECTION_TIMEOUT)
+        response = requests.get(url, stream=True, timeout=CONNECTION_TIMEOUT)
         status = response.status_code
         response.close()  # don't leave the connection open
 
